@@ -11,6 +11,7 @@ import (
 )
 
 var TaskCollection *mongo.Collection
+var UserCollection *mongo.Collection
 
 func Connect() {
 	clientOptions := options.Client().ApplyURI("mongodb://localhost:27017")
@@ -29,6 +30,9 @@ func Connect() {
 		log.Fatal(err)
 	}
 
-	TaskCollection = client.Database("taskmanager").Collection("tasks")
+	database := client.Database("taskmanager")
+
+	TaskCollection = database.Collection("tasks")
+	UserCollection = database.Collection("users")
 	fmt.Println("Connected to MongoDB!")
 }
